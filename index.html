@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kaagaz Saathi: learn DigiLocker, Aadhaar and PAN</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;700;800&family=Hanken+Grotesk:wght@400;500;700&display=swap">
+<style>
+:root{--bg:#EDF1F6;--sf:#fff;--ink:#12203A;--mut:#4F5E78;--ln:#C9D3E2;--mar:#F2A31B;--ind:#3F4CC0;--tea:#14808A;--stp:#B8321F;--ok:#177A4B;--acc:#3F4CC0;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1626;--sf:#172339;--ink:#E8EEF8;--mut:#A3B3CE;--ln:#2B3B59;--stp:#FF8A78;--ok:#4FD39A;--acc:#8E99FF;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1626;--sf:#172339;--ink:#E8EEF8;--mut:#A3B3CE;--ln:#2B3B59;--stp:#FF8A78;--ok:#4FD39A;--acc:#8E99FF;color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 "Hanken Grotesk",system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+h1,h2,h3,.wm{font-family:"Bricolage Grotesque","Hanken Grotesk",system-ui,sans-serif;letter-spacing:-.02em;line-height:1.1;margin:0}
+a{color:var(--acc)}
+:focus-visible{outline:3px solid var(--mar);outline-offset:2px}
+.w{max-width:1040px;margin:0 auto;padding:0 20px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--bg);border-bottom:1px solid var(--ln)}
+header .w{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;flex-wrap:wrap}
+.wm{font-weight:800;font-size:1.25rem;display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+.wm i{width:26px;height:18px;border-radius:4px;background:var(--mar);box-shadow:5px -4px 0 var(--ind)}
+nav{display:flex;gap:18px;font-weight:500;font-size:.95rem}
+nav a{color:var(--ink);text-decoration:none;padding:6px 0;border-bottom:2px solid transparent}
+nav a:hover{border-color:var(--mar)}
+.hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:56px 0 48px}
+h1{font-size:clamp(2.4rem,6vw,4.3rem);font-weight:800}
+.hero p{max-width:46ch;color:var(--mut);font-size:1.1rem;margin:18px 0 26px}
+.btn{display:inline-block;background:var(--ink);color:var(--bg);font:700 1rem "Hanken Grotesk",sans-serif;padding:12px 22px;border-radius:10px;text-decoration:none;border:0;cursor:pointer}
+.btn.o{background:none;color:var(--ink);border:2px solid var(--ink);margin-left:8px}
+.stack{position:relative;width:min(100%,430px);height:310px;padding-top:20px}
+.idc{position:absolute;left:0;top:20px;width:calc(100% - 70px);max-width:360px;aspect-ratio:1.586;border-radius:16px;padding:18px;border:0;text-align:left;color:#fff;cursor:pointer;overflow:hidden;transition:transform .55s cubic-bezier(.2,.8,.2,1);box-shadow:0 14px 28px -14px rgba(8,16,40,.6);font:500 .85rem "Hanken Grotesk",sans-serif;display:flex;flex-direction:column;justify-content:space-between}
+.idc::before{content:"";position:absolute;inset:0;background:repeating-radial-gradient(circle at 85% 125%,transparent 0 7px,rgba(255,255,255,.14) 7px 8px)}
+.idc>*{position:relative}
+.idc b{font:800 1.5rem "Bricolage Grotesque",sans-serif;display:block}
+.idc em{font-style:normal;letter-spacing:.14em;opacity:.85}
+.chip{width:36px;height:26px;border-radius:5px;background:rgba(255,255,255,.35)}
+#c-dl{background:linear-gradient(135deg,#3F4CC0,#262F8C)}
+#c-aa{background:#F2A31B;color:#2B1A00}
+#c-pn{background:#14808A}
+.pills{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.pills button,.tabs button{font:500 .95rem "Hanken Grotesk",sans-serif;color:var(--ink);background:var(--sf);border:1.5px solid var(--ln);border-radius:99px;padding:7px 16px;cursor:pointer}
+.pills button[aria-pressed=true],.tabs button[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+#cap{min-height:3.2em;margin:12px 0 0;color:var(--mut);max-width:42ch;font-size:1rem}
+section{padding:56px 0;border-top:1px solid var(--ln)}
+h2{font-size:clamp(1.7rem,4vw,2.5rem);font-weight:800;margin-bottom:10px}
+.lead{color:var(--mut);max-width:58ch;margin:0 0 26px}
+.tabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.gd{display:grid;grid-template-columns:1fr 1.6fr;gap:32px;align-items:start}
+.side{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:20px;border-top:6px solid var(--k,var(--ind))}
+.side h3{font-size:1.3rem;margin-bottom:8px}
+.side p{margin:0 0 12px}
+.side small{color:var(--mut);display:block;font-weight:700}
+ol{list-style:none;margin:0;padding:0;counter-reset:s}
+.st{display:flex;gap:14px;align-items:flex-start;padding:14px 4px;border-bottom:1px solid var(--ln);cursor:pointer;counter-increment:s}
+.st input{position:absolute;opacity:0}
+.st .n{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font:800 1rem "Bricolage Grotesque",sans-serif}
+.st .n::before{content:counter(s)}
+.st input:checked+.n{background:var(--ok);border-color:var(--ok);color:#fff}
+.st input:checked+.n::before{content:"\2713"}
+.st input:checked~span:last-child{color:var(--mut);text-decoration:line-through}
+.st input:focus-visible+.n{outline:3px solid var(--mar);outline-offset:2px}
+.prog{margin:14px 0 0;color:var(--mut);font-size:.95rem}
+.safe{background:#12203A;color:#EAF0FA;border-radius:22px;padding:40px 28px;position:relative;border:1px solid var(--ln)}
+.safe h2{color:#fff}
+.safe .lead{color:#B7C4DD}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0;padding:0;list-style:none}
+.rules li{border:1px solid #33466A;border-radius:12px;padding:16px;color:#D9E3F5}
+.rules strong{display:block;color:#fff;font:700 1.1rem "Bricolage Grotesque",sans-serif;margin-bottom:4px}
+.stamp{display:inline-block;border:3px solid #FF8A78;color:#FF8A78;border-radius:8px;padding:2px 12px;font:800 1.1rem "Bricolage Grotesque",sans-serif;transform:rotate(-4deg);margin-bottom:14px}
+details{background:var(--sf);border:1px solid var(--ln);border-radius:12px;margin-bottom:10px}
+summary{cursor:pointer;padding:14px 18px;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";font-size:1.4rem;line-height:1;color:var(--acc);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0;padding:0 18px 16px;color:var(--mut)}
+.qz{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:26px;max-width:680px}
+.qz h3{font-size:1.35rem;margin:6px 0 16px}
+.qo{display:block;width:100%;text-align:left;font:500 1rem "Hanken Grotesk",sans-serif;color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.qo:hover:not(:disabled){border-color:var(--ink)}
+.qo.ok{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--bg))}
+.qo.no{border-color:var(--stp);background:color-mix(in srgb,var(--stp) 12%,var(--bg))}
+.qo:disabled{cursor:default;color:var(--ink)}
+.fb{margin:12px 0;color:var(--mut)}
+.qz .stamp{border-color:var(--ok);color:var(--ok);font-size:1.5rem}
+.qz .stamp.t{border-color:var(--stp);color:var(--stp)}
+dl{display:grid;grid-template-columns:1fr 1fr;gap:12px 32px;margin:0}
+dt{font:700 1.1rem "Bricolage Grotesque",sans-serif}
+dd{margin:0 0 6px;color:var(--mut)}
+footer{border-top:1px solid var(--ln);padding:32px 0 44px;color:var(--mut);font-size:.95rem}
+footer p{max-width:70ch;margin:0 0 10px}
+@media(max-width:760px){.hero,.gd,.rules,dl{grid-template-columns:1fr}.hero{padding-top:32px}nav{gap:12px;font-size:.88rem}.btn.o{margin:8px 0 0}.safe{padding:28px 18px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="w"><a class="wm" href="#top"><i></i>Kaagaz Saathi</a>
+<nav aria-label="Sections"><a href="#learn">Learn</a><a href="#safe">Stay safe</a><a href="#fix">Fix a problem</a><a href="#quiz">Quiz</a></nav></div></header>
+<main id="top">
+<div class="w">
+<div class="hero">
+<div><h1>Your documents, safe in your pocket.</h1>
+<p>Step-by-step guides to DigiLocker, Aadhaar and PAN, plus how to avoid fraud and fix common errors. Written for first-time users.</p>
+<a class="btn" href="#learn">Start learning</a><a class="btn o" href="#quiz">Test yourself</a></div>
+<div><div class="stack" role="group" aria-label="Choose a document">
+<button class="idc" id="c-pn" data-k="pn"><span><b>PAN</b>Tax identity</span><span class="chip"></span><em>XXXXX 0000 X</em></button>
+<button class="idc" id="c-aa" data-k="aa"><span><b>Aadhaar</b>Identity number</span><span class="chip"></span><em>XXXX XXXX 0000</em></button>
+<button class="idc" id="c-dl" data-k="dl"><span><b>DigiLocker</b>Document wallet</span><span class="chip"></span><em>SAMPLE CARD</em></button>
+</div>
+<div class="pills" id="pills"></div>
+<p id="cap" aria-live="polite"></p></div>
+</div></div>
+
+<div class="w"><section id="learn">
+<h2>Learn it step by step</h2>
+<p class="lead">Pick a service. Tap each step as you finish it to track your progress.</p>
+<div class="tabs" id="tabs"></div>
+<div class="gd"><div class="side" id="side"></div><div><ol id="steps"></ol><p class="prog" id="prog" aria-live="polite"></p></div></div>
+</section></div>
+
+<div class="w"><div class="safe" id="safe">
+<span class="stamp">Never share</span>
+<h2>Four habits that stop most fraud</h2>
+<p class="lead">Scammers copy the look of official sites and calls. These habits work even when the fake looks real.</p>
+<ul class="rules">
+<li><strong>Keep OTPs and PINs to yourself</strong>No official will ask for them on a call, SMS or WhatsApp.</li>
+<li><strong>Type the address yourself</strong>Use digilocker.gov.in, myaadhaar.uidai.gov.in and incometax.gov.in. Skip links in messages and ads.</li>
+<li><strong>Share a masked Aadhaar</strong>When a full number isn’t needed, share a copy that shows only the last four digits.</li>
+<li><strong>Lock your biometrics</strong>Lock them in the myAadhaar portal when you’re not using them. Unlock only when needed.</li>
+</ul></div></div>
+
+<div class="w"><section id="fix">
+<h2>Something went wrong?</h2>
+<p class="lead">The five problems people hit most, and what to try first.</p>
+<details><summary>The OTP doesn’t arrive</summary><p>Wait two minutes before asking again, and check your signal. Make sure the number is the one registered with the service. If you changed numbers, update it at an Aadhaar centre first.</p></details>
+<details><summary>My document isn’t showing in DigiLocker</summary><p>Confirm you picked the right issuer and that your details match their records exactly. Try again later, since issuer services sometimes go down.</p></details>
+<details><summary>My name doesn’t match across documents</summary><p>Compare spelling, initials and word order. A mismatch usually means one record needs a correction at the issuing office.</p></details>
+<details><summary>I forgot my DigiLocker PIN</summary><p>Use the forgot-PIN option on the sign-in screen and verify with an OTP to set a new one.</p></details>
+<details><summary>My upload fails</summary><p>Check the file type and size the app accepts, and your connection. A smaller PDF or a clear JPG usually works.</p></details>
+</section></div>
+
+<div class="w"><section id="quiz">
+<h2>Check what you’ve learned</h2>
+<p class="lead">Five questions. You’ll see why each answer is right.</p>
+<div class="qz" id="qz" aria-live="polite"></div>
+</section></div>
+
+<div class="w"><section>
+<h2>Words you’ll hear</h2><p class="lead"></p>
+<dl><div><dt>URI</dt><dd>A unique address for one document in DigiLocker.</dd></div>
+<div><dt>VID</dt><dd>A 16-digit number you can give instead of your Aadhaar number. You can generate a new one anytime.</dd></div>
+<div><dt>Masked Aadhaar</dt><dd>A copy that shows only the last four digits.</dd></div>
+<div><dt>e-KYC</dt><dd>Verifying identity digitally, with your consent, instead of paper copies.</dd></div>
+<div><dt>e-PAN</dt><dd>A digitally signed PAN card in PDF form.</dd></div></dl>
+</section></div>
+</main>
+<footer><div class="w">
+<p>A TYBSc IT Community Engagement Project on DigiLocker, Aadhaar and PAN services. For learning only: never enter real Aadhaar, PAN or OTP details anywhere except the official portals.</p>
+<p>Rules and fees change, so confirm on the official sites: <a href="https://www.digilocker.gov.in/">DigiLocker</a>, <a href="https://myaadhaar.uidai.gov.in/">myAadhaar (UIDAI)</a>, <a href="https://www.incometax.gov.in/">Income Tax portal</a>.</p>
+</div></footer>
+<script>
+const $=s=>document.querySelector(s);
+const G={
+dl:{n:"DigiLocker",c:"#3F4CC0",cap:"DigiLocker keeps your government-issued documents in one app. It states that issued documents are valid like the originals.",what:"A government app and website that holds your official documents and lets you share them without photocopies. Documents from issuers appear as Issued. Files you add yourself sit in your Drive.",keep:"The mobile number linked to Aadhaar, and your Aadhaar number.",s:["Install the DigiLocker app, or open digilocker.gov.in yourself.","Sign up with your Aadhaar-linked mobile number and enter the OTP you receive.","Set a 6-digit security PIN. You’ll use it to sign in, so pick one only you know.","Open the documents section, choose the issuer (for example the Income Tax Department for PAN) and fetch the document.","Open a fetched document to view it, download it or share it as a link."]},
+aa:{n:"Aadhaar",c:"#F2A31B",cap:"Aadhaar is a 12-digit identity number from UIDAI. Services use it to confirm who you are.",what:"A 12-digit identity number issued by UIDAI. Services such as e-KYC and DigiLocker use it to confirm who you are.",keep:"Your Aadhaar number or 16-digit VID, and the mobile number registered with Aadhaar.",s:["Open myaadhaar.uidai.gov.in and choose Download Aadhaar.","Enter your 12-digit Aadhaar number or 16-digit VID, then the captcha.","Enter the OTP sent to your registered mobile number.","Download the PDF. Its password is the first four letters of your name in capitals plus your birth year, like RAHU1998.","Optional: lock your biometrics in the same portal so no one can use your fingerprints or iris."]},
+pn:{n:"PAN",c:"#14808A",cap:"PAN is a 10-character number from the Income Tax Department. Banks and tax filing use it to identify you.",what:"A 10-character number from the Income Tax Department. Banks and tax filing use it to identify you.",keep:"An Aadhaar number linked to your mobile (for instant e-PAN), or your existing PAN to link it.",s:["Open incometax.gov.in and find Instant e-PAN under Quick Links.","Choose Get New e-PAN and enter your Aadhaar number. This works if you don’t already have a PAN.","Verify with the OTP sent to your Aadhaar-linked mobile.","Confirm your details and submit. Your e-PAN PDF is issued once it’s processed.","Already have a PAN? Use Link Aadhaar on the same portal, and check there for any current fee."]}
+};
+const K=["dl","aa","pn"],P=["translate(0,46px) rotate(-3deg)","translate(34px,16px) rotate(3deg)","translate(66px,-12px) rotate(8deg)"];
+function mk(box,cls){K.forEach(k=>{const b=document.createElement("button");b.textContent=G[k].n;b.dataset.k=k;b.setAttribute("aria-pressed","false");box.appendChild(b)})}
+mk($("#pills"));mk($("#tabs"));
+function front(k){[k,...K.filter(x=>x!==k)].forEach((id,i)=>{const e=$("#c-"+id);e.style.transform=P[i];e.style.zIndex=3-i;e.setAttribute("aria-pressed",i===0)});
+document.querySelectorAll("#pills button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===k));$("#cap").textContent=G[k].cap}
+function guide(k){const g=G[k];document.querySelectorAll("#tabs button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.k===k));
+$("#side").style.setProperty("--k",g.c);
+$("#side").innerHTML="<h3>"+g.n+"</h3><p>"+g.what+"</p><small>Keep ready</small><p>"+g.keep+"</p>";
+$("#steps").innerHTML=g.s.map((t,i)=>'<li><label class="st"><input type="checkbox"><span class="n"></span><span>'+t+"</span></label></li>").join("");
+upd()}
+function upd(){const a=document.querySelectorAll("#steps input"),d=[...a].filter(x=>x.checked).length;$("#prog").textContent=d===a.length?"All "+a.length+" steps done. Nice work.":d+" of "+a.length+" steps done"}
+$("#steps").addEventListener("change",upd);
+document.addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(!b)return;if(b.closest("#tabs"))guide(b.dataset.k);else front(b.dataset.k)});
+front("dl");guide("dl");
+const Q=[
+["Someone calls and asks for the OTP you just received. What should you do?",["Share it, they’re from the bank","Never share it and hang up","Share only half of it"],1,"OTPs are for you alone. Genuine officials never ask for them."],
+["Which address is the official place to download e-Aadhaar?",["myaadhaar.uidai.gov.in","aadhaar-download.in","A link sent on WhatsApp"],0,"Official sites end in .gov.in. Type the address yourself rather than following links."],
+["What are Issued documents in DigiLocker?",["Files you uploaded yourself","Documents provided by the issuing organisation","Documents shared by friends"],1,"Issued documents come straight from the issuer. Your own uploads go to your Drive."],
+["What is the password for a downloaded e-Aadhaar PDF?",["Your mobile number","Your PAN number","First four letters of your name in capitals plus birth year"],2,"For example, a person named Rahul born in 1998 would use RAHU1998."],
+["What does a masked Aadhaar show?",["Only the last four digits","Only the first four digits","Your full number, in a smaller font"],0,"It hides the other digits, so share it whenever a full number isn’t required."]];
+let qi=0,sc=0;
+function ask(){const q=Q[qi];$("#qz").innerHTML="<small>Question "+(qi+1)+" of "+Q.length+"</small><h3>"+q[0]+"</h3>"+q[1].map((o,i)=>'<button class="qo" data-i="'+i+'">'+o+"</button>").join("")+'<p class="fb" id="fb"></p>'}
+function end(){const ok=sc>=4;$("#qz").innerHTML='<span class="stamp'+(ok?"":" t")+'">'+(ok?"Verified":"Almost there")+"</span><h3>You scored "+sc+" out of "+Q.length+"</h3><p class=\"fb\">"+(ok?"You know how to use these services safely.":"Revisit the guides and the safety habits, then try again.")+'</p><button class="btn" id="again">Try again</button>'}
+$("#qz").addEventListener("click",e=>{
+if(e.target.id==="again"){qi=0;sc=0;ask();return}
+if(e.target.id==="next"){qi++;qi<Q.length?ask():end();return}
+const o=e.target.closest(".qo");if(!o)return;const q=Q[qi],i=+o.dataset.i;
+document.querySelectorAll(".qo").forEach((b,j)=>{b.disabled=true;if(j===q[2])b.classList.add("ok");else if(j===i)b.classList.add("no")});
+if(i===q[2])sc++;
+$("#fb").innerHTML=(i===q[2]?"Correct. ":"Not quite. ")+q[3]+' <br><br><button class="btn" id="next">'+(qi<Q.length-1?"Next question":"See my score")+"</button>";$("#next").focus()});
+ask();
+</script>
+</body>
+</html>
